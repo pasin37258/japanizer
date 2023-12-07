@@ -7,7 +7,7 @@ user_api_key = st.sidebar.text_input("OpenAI API key", type="password")
 client = openai.OpenAI(api_key=user_api_key)
 prompt = """
             Act as Japanese linguist. You will recieve a Japanese sentence which may contains with hiragana(ひらがな), katakana(カタカナ), and kanji(漢字).
-            The sentence is delimited by triple backticks. You have four main tasks to do. 
+            You have four main tasks to do. 
             List all of your answers in a JSON object, one answer per line.
             These are your tasks:
             1) Translate the sentence:
@@ -38,9 +38,63 @@ prompt = """
         """
 
 st.title('Japanizer')
-st.markdown("""This website can help you learn advanced Japanese from just one Japanese sentence. 
-            The AI will give you results that contains 3 possible English translations, Vocabulary, Grammar, Kanji, and Example conversation.""")
+st.markdown("""This website can help you learn advanced Japanese from just one Japanese sentence. \n
+            The AI will give you results that contains \n
+            3 possible English translations, Vocabulary, Grammar, Kanji, and Example conversation.""")
 
 user_input = st.text_area("Enter Japanese text:", "日本語")
 
 submit_button = st.button("Submit")
+
+if submit_button:
+    messages_so_far = [
+        {"role": "system", "content": prompt},
+        {'role': 'user', 'content': user_input},
+    ]
+    response = client.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=messages_so_far
+    )
+    answer_dictionary = response.choices[0].message.content
+
+    ad = json.loads(answer_dictionary)
+    print (ad)
+
+    translations = ad["Translation"]["Translations"]
+    print(translations)
+    st.markdown('**English translations:**')
+    st.table(translations)
+
+    vocab = ad["Translation"]["Vocabulary"]
+    print(vocab)
+    st.markdown('**Vocabulary:**')
+    vocab_df = pd.DataFrame.from_dict(vocab)
+    print(vocab_df)
+    st.table(vocab_df)
+
+    grammar = ad["Analysis"]["Grammar"]
+    print(grammar)
+    st.markdown('**Grammar:**')
+    st.table(grammar)
+
+    conjugation = ad["Analysis"]["Conjugation"]
+    print(conjugation)
+    st.markdown('**Conjugation:**')
+    st.table(conjugation)
+
+    particles = ad["Analysis"]["Particles"]
+    print(particles)
+    st.markdown('**Particles:**')
+    st.table(particles)
+
+    kanji = ad["Kanji"]
+    print(kanji)
+    st.markdown('**Kanji:**')
+    kanji_df = pd.DataFrame.from_dict(kanji)
+    print(kanji_df)
+    st.table(kanji_df)
+
+    example_con = ad["Example"]
+    print(example_con)
+    st.markdown('**Example conversation:**')
+    st.table(example_con)
