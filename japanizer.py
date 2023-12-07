@@ -38,8 +38,8 @@ prompt = """
         """
 
 st.title('Japanizer')
-st.markdown("""This website can help you learn advanced Japanese from just one Japanese sentence. \n
-            The AI will give you results that contains \n
+st.markdown("""This website can help you learn advanced Japanese from just one Japanese sentence.
+            The AI will give you results that contains
             3 possible English translations, Vocabulary, Grammar, Kanji, and Example conversation.""")
 
 user_input = st.text_area("Enter Japanese text:", "日本語")
