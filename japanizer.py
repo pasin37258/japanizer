@@ -2,6 +2,7 @@ import openai
 import streamlit as st
 import json
 import pandas as pd
+import time
 
 user_api_key = st.sidebar.text_input("OpenAI API key", type="password")
 client = openai.OpenAI(api_key=user_api_key)
@@ -32,20 +33,23 @@ prompt = """
 
             Give all of your answers in a JSON object which contains following keys:
             "Translation": {"Translations" (1.1), "Vocabulary" (1.2): [{"Word", "Furigana", "Meaning", "Part of Speech"}]},
-            "Analysis" (2): {"Grammar" (2.1), "Conjugation" (2.2), "Particles" (2.3)},
+            "Analysis" (2): {"Grammar" (2.1): {"Grammar", "Explanation"}, "Conjugation" (2.2): {"Congugation", "Explanation"}, "Particles" (2.3): {"Particles", "Explanation"}},
             "Kanji" (3): [{"Kanji" (3.1), "Meaning", "Stroke Count", "Kun-yomi", "On-yomi", "Examples": [{"Word", "Furigana", "Meaning"}]}],
-            "Example" (4): {"Conversation", "Furigana", "Translation"}
+            "Example" (4): {"Japanese", "Furigana", "Translation"}
         """
 
 st.title('Japanizer :shinto_shrine:')
-st.markdown("This website can help you learn advanced Japanese from just one Japanese sentence. :japan:")
-st.markdown("The AI will give you results that contains 3 possible English translations, Vocabulary, Grammar, Kanji, and Example conversation.")
+st.markdown("Japanizer can help you learn advanced Japanese from just one Japanese sentence. :japan:")
+st.markdown("Japanizer is an AI that will give you results that contains 3 possible English translations, Vocabulary, Grammar, Kanji, and Example conversation.")
 
 user_input = st.text_area("Enter Japanese text:", "日本語")
 
 submit_button = st.button("Submit")
 
 if submit_button:
+    with st.spinner("Japanizer is taking about 1 minute 30 seconds to process your input. :confounded: Please wait..."):
+        time.sleep(90)
+    st.success("Japanizer has finished processing your input. :smile:")
     messages_so_far = [
         {"role": "system", "content": prompt},
         {'role': 'user', 'content': user_input},
@@ -58,8 +62,6 @@ if submit_button:
 
     ad = json.loads(answer_dictionary)
     print (ad)
-
-    st.spinner("Japanizer is taking about 1 minute 30 seconds to process your input. :confounded: Please wait...")
 
     translations = ad["Translation"]["Translations"]
     print(translations)
@@ -76,17 +78,23 @@ if submit_button:
     grammar = ad["Analysis"]["Grammar"]
     print(grammar)
     st.markdown('**Grammar:**')
-    st.table(grammar)
+    grammar_df = pd.DataFrame.from_dict(grammar)
+    print(grammar_df)
+    st.table(grammar_df)
 
     conjugation = ad["Analysis"]["Conjugation"]
     print(conjugation)
     st.markdown('**Conjugation:**')
-    st.table(conjugation)
+    conjugation_df = pd.DataFrame.from_dict(conjugation)
+    print(conjugation_df)
+    st.table(conjugation_df)
 
     particles = ad["Analysis"]["Particles"]
     print(particles)
     st.markdown('**Particles:**')
-    st.table(particles)
+    particles_df = pd.DataFrame.from_dict(particles)
+    print(particles_df)
+    st.table(particles_df)
 
     kanji = ad["Kanji"]
     print(kanji)
@@ -95,11 +103,9 @@ if submit_button:
     print(kanji_df)
     st.table(kanji_df)
 
-    example_con = ad["Example"]["Conversation"]
+    example_con = ad["Example"]
     print(example_con)
-    furigana_con = ad["Example"]["Furigana"]
-    print(furigana_con)
-    trans_con = ad["Example"]["Translation"]
-    print(trans_con)
     st.markdown('**Example conversation:**')
-    st.table(example_con, furigana_con, trans_con)
+    example_con_df = pd.DataFrame.from_dict(example_con)
+    print(example_con_df)
+    st.table(example_con_df)
