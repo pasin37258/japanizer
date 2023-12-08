@@ -38,8 +38,8 @@ prompt = """
         """
 
 st.title('Japanizer')
-caption = """This website can help you learn advanced Japanese from just one Japanese sentence. \n
-            The AI will give you results that contains \n
+caption = """This website can help you learn advanced Japanese from just one Japanese sentence. \n\
+            The AI will give you results that contains \n\
             3 possible English translations, Vocabulary, Grammar, Kanji, and Example conversation."""
 st.markdown(caption)
 
