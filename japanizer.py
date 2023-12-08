@@ -38,7 +38,7 @@ prompt = """
         """
 
 st.title('Japanizer')
-st.markdown("This website can help you learn advanced Japanese from just one Japanese sentence. :flag-jp:")
+st.markdown("This website can help you learn advanced Japanese from just one Japanese sentence. :japan:")
 st.markdown("The AI will give you results that contains 3 possible English translations, Vocabulary, Grammar, Kanji, and Example conversation.")
 
 user_input = st.text_area("Enter Japanese text:", "日本語")
@@ -58,6 +58,8 @@ if submit_button:
 
     ad = json.loads(answer_dictionary)
     print (ad)
+
+    st.spinner("Japanizer is taking about 1 minute 30 seconds to process your input. :confounded: Please wait...")
 
     translations = ad["Translation"]["Translations"]
     print(translations)
