@@ -25,23 +25,22 @@ prompt = """
             3) List the kanji from the sentence:
             3.1 List all of kanji found in the sentence. For each kanji follow this instruction:
             - Kanji has it own meaning. So, give me each kanji meaning.
-            - Give me each kanji stroke count.
-            - Kanji has many way to read and can be consist with other kanji. So, give me kun-yomi(訓読み) and on-yomi(音読み).
-            - Give me five examples of word that has each kanji consisted, ordered by word frequency, give me a furigana and give me meaning of each word.
+            - Kanji has many way to read and can be consist with other kanji. So, give me kun-yomi(訓読み) and on-yomi(音読み) for each kanji.
+            - Give me five examples of word that has each kanji consisted, ordered by word frequency, give me a furigana and meaning of each word.
             4) Write a short example conversation use the sentence given. Conversation is between Aさん and Bさん.
-            -Give a furigana(ふりがな) and translate the written conversation to English.
+            -Give a furigana and translate the written conversation to English.
 
             Give all of your answers in a JSON object which contains following keys:
             "Translation": {"Translations" (1.1), "Vocabulary" (1.2): [{"Word", "Furigana", "Meaning", "Part of Speech"}]},
             "Analysis" (2): {"Grammar" (2.1): [{"Grammar", "Explanation"}], "Conjugation" (2.2): [{"Congugation", "Explanation"}], "Particles" (2.3): [{"Particles", "Explanation"}]},
-            "Kanji" (3): [{"Kanji" (3.1), "Meaning", "Stroke Count", "Kun-yomi", "On-yomi", "Examples": [{"Word", "Furigana", "Meaning"}]}],
-            "Example" (4): {"Japanese", "Furigana", "Translation"}
+            "Kanji" (3): [{"Kanji" (3.1), "Meaning", "Kun-yomi", "On-yomi", "Examples": [{"Word", "Furigana", "Meaning"}]}],
+            "Example" (4): {"Japanese": {"Aさん", "Bさん"}, "Furigana": {"Aさん", "Bさん"}, "Translation": {"Aさん", "Bさん"}}
         """
 
 st.title('Japanizer :shinto_shrine:')
 st.markdown("Japanizer can help you learn advanced Japanese from just one Japanese sentence. :japan:")
 st.markdown("Japanizer is an AI that will give you results that contains 3 possible English translations, Vocabulary, Grammar, Kanji, and Example conversation.")
-st.markdown("Note: Because Japanizer has a lot of tasks to do, it may take about 2 minutes to process your input. Please be patient. :pray:")
+st.markdown("Note: Because Japanizer has a lot of tasks to do, it may take about 2-3 minutes to process your input. Please be patient. :pray:")
 
 user_input = st.text_area("Enter Japanese text:", "日本語")
 
@@ -50,7 +49,7 @@ submit_button = st.button("Submit")
 if submit_button:
     with st.spinner("Japanizer will take a while to process your input. :confounded: Please wait..."):
         time.sleep(120)
-    st.success("Japanizer has finished processing your input. :smile:")
+    st.success("Your result is almost ready! :happy:")
     messages_so_far = [
         {"role": "system", "content": prompt},
         {'role': 'user', 'content': user_input},
