@@ -33,7 +33,8 @@ prompt = """
             Give all of your answers in a JSON object which contains following keys:
             "Translation": {"Translations" (1.1), "Vocabulary" (1.2): [{"Word", "Furigana", "Meaning", "Part of Speech"}]},
             "Analysis" (2): {"Grammar" (2.1): [{"Grammar", "Explanation"}], "Conjugation" (2.2): [{"Congugation", "Explanation"}], "Particles" (2.3): [{"Particles", "Explanation"}]},
-            "Kanji" (3): [{"Kanji" (3.1), "Meaning", "Kun-yomi", "On-yomi", "Examples": [{"Word", "Furigana", "Meaning"}]}],
+            "Kanji" (3): [{"Kanji" (3.1), "Meaning", "Kun-yomi", "On-yomi"}],
+            "Kanji_examples": [{"Word", "Furigana", "Meaning"}],
             "Example" (4): {"Japanese": {"Aさん", "Bさん"}, "Furigana": {"Aさん", "Bさん"}, "Translation": {"Aさん", "Bさん"}}
         """
 
@@ -102,6 +103,13 @@ if submit_button:
     kanji_df = pd.DataFrame.from_dict(kanji)
     print(kanji_df)
     st.table(kanji_df)
+
+    kanji_examples = ad["Kanji_examples"]
+    print(kanji_examples)
+    st.markdown('**Kanji examples:**')
+    kanji_examples_df = pd.DataFrame.from_dict(kanji_examples)
+    print(kanji_examples_df)
+    st.table(kanji_examples_df)
 
     example_con = ad["Example"]
     print(example_con)
