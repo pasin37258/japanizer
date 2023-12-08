@@ -37,7 +37,7 @@ prompt = """
             "Example" (4): {"Conversation", "Furigana", "Translation"}
         """
 
-st.title('Japanizer')
+st.title('Japanizer :shinto_shrine:')
 st.markdown("This website can help you learn advanced Japanese from just one Japanese sentence. :japan:")
 st.markdown("The AI will give you results that contains 3 possible English translations, Vocabulary, Grammar, Kanji, and Example conversation.")
 
