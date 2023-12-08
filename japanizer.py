@@ -31,15 +31,15 @@ prompt = """
             -Give a furigana(ふりがな) and translate the written conversation to English.
 
             Give all of your answers in a JSON object which contains following keys:
-            "Translation": {"Translations" (1.1), "Vocabulary" (1.2)},
+            "Translation": {"Translations" (1.1), "Vocabulary" (1.2): [{"Word", "Furigana", "Meaning", "Part of Speech"}]},
             "Analysis" (2): {"Grammar" (2.1), "Conjugation" (2.2), "Particles" (2.3)},
-            "Kanji" (3), 
-            "Example" (4)
+            "Kanji" (3): [{"Kanji" (3.1), "Meaning", "Stroke Count", "Kun-yomi", "On-yomi", "Examples": [{"Word", "Furigana", "Meaning"}]}],
+            "Example" (4): {"Conversation", "Furigana", "Translation"}
         """
 
 st.title('Japanizer')
-st.markdown("""This website can help you learn advanced Japanese from just one Japanese sentence.
-            The AI will give you results that contains
+st.markdown("""This website can help you learn advanced Japanese from just one Japanese sentence.\n
+            The AI will give you results that contains\n
             3 possible English translations, Vocabulary, Grammar, Kanji, and Example conversation.""")
 
 user_input = st.text_area("Enter Japanese text:", "日本語")
@@ -94,7 +94,11 @@ if submit_button:
     print(kanji_df)
     st.table(kanji_df)
 
-    example_con = ad["Example"]
+    example_con = ad["Example"]["Conversation"]
     print(example_con)
+    furigana_con = ad["Example"]["Furigana"]
+    print(furigana_con)
+    trans_con = ad["Example"]["Translation"]
+    print(trans_con)
     st.markdown('**Example conversation:**')
-    st.table(example_con)
+    st.table(example_con, furigana_con, trans_con)
