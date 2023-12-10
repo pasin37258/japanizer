@@ -47,7 +47,8 @@ user_input = st.text_area("Enter Japanese text:", "日本語")
 submit_button = st.button("Submit")
 
 if submit_button:
-    st.spinner("Japanizer will take a while to process your input. :confounded: Please wait...")
+    with st.spinner("Japanizer will take a while to process your input. :confounded: Please wait..."):
+        time.sleep(120)
 
     messages_so_far = [
         {"role": "system", "content": prompt},
@@ -62,7 +63,7 @@ if submit_button:
     ad = json.loads(answer_dictionary)
     print (ad)
 
-    st.success("Your result is almost ready! :happy:")
+    st.success("Your results are ready! ٩(＾◡＾)۶")
 
     translations = ad["Translation"]["Translations"]
     print(translations)
