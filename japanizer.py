@@ -22,7 +22,7 @@ prompt = """
             2.2 Analyze the word form/conjugation which used in the sentence whether verb, adjective or noun. List what form is it and why the sentence used each form.
             2.3 Analyze the Japanese particles(助詞) which used in the sentence. List the particles and explain why the sentence used each particle.
             3) List the kanji from the sentence:
-            3.1 List all of kanji(漢字) in the sentence. You must list kanji as single kanji, and not compound kanji. For each kanji follow this instruction:
+            3.1 List all of kanji(漢字) in the sentence. Kanji must be single kanji, and not compound kanji. For each kanji follow this instruction:
             - Kanji has it own meaning. So, give me each kanji meaning.
             - Kanji has many way to read and can be consist with other kanji. So, give me kun-yomi(訓読み) and on-yomi(音読み) for each kanji.
             - Give me five examples of words for each kanji, ordered by word frequency, give me a furigana and meaning of each word.
