@@ -33,8 +33,7 @@ prompt = """
             Give all of your answers in a JSON object which contains following keys:
             "Translation": {"Translations" (1.1), "Vocabulary" (1.2): [{"Word", "Furigana", "Meaning", "Part of Speech"}]},
             "Analysis" (2): {"Grammar" (2.1): [{"Grammar", "Explanation"}], "Conjugation" (2.2): [{"Congugation", "Explanation"}], "Particles" (2.3): [{"Particles", "Explanation"}]},
-            "Kanji" (3): [{"Kanji" (3.1), "Meaning", "Kun-yomi", "On-yomi"}],
-            "Kanji_examples": [{"Word", "Furigana", "Meaning"}],
+            "Kanji" (3): [{"Kanji" (3.1), "Meaning", "Kun-yomi", "On-yomi", "Examples": [{"Word", "Furigana", "Meaning"}]}],
             "Example" (4): {"Japanese": {"Aさん", "Bさん"}, "Furigana": {"Aさん", "Bさん"}, "Translation": {"Aさん", "Bさん"}}
         """
 
@@ -98,13 +97,21 @@ if submit_button:
     st.table(particles_df)
 
     kanji = ad["Kanji"]
+    kanji_examples_list = []
+    for kanji_dict in kanji:
+        examples_list = kanji_dict.pop("Examples")
+        for example in examples_list:
+            example["Kanji"] = kanji_dict["Kanji"]
+            kanji_examples_list.append(example)
+
+    kanji = ad["Kanji"]
     print(kanji)
     st.markdown('**Kanji:**')
     kanji_df = pd.DataFrame.from_dict(kanji)
     print(kanji_df)
     st.table(kanji_df)
 
-    kanji_examples = ad["Kanji_examples"]
+    kanji_examples = kanji_examples_list
     print(kanji_examples)
     st.markdown('**Kanji examples:**')
     kanji_examples_df = pd.DataFrame.from_dict(kanji_examples)
