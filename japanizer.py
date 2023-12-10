@@ -2,7 +2,6 @@ import openai
 import streamlit as st
 import json
 import pandas as pd
-import time
 
 user_api_key = st.sidebar.text_input("OpenAI API key", type="password")
 client = openai.OpenAI(api_key=user_api_key)
