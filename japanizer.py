@@ -23,10 +23,10 @@ prompt = """
             2.2 Analyze the word form/conjugation which used in the sentence whether verb, adjective or noun. List what form is it and why the sentence used each form.
             2.3 Analyze the Japanese particles(助詞) which used in the sentence. List the particles and explain why the sentence used each particle.
             3) List the kanji from the sentence:
-            3.1 List all of individual kanji(漢字) found in the sentence. For each kanji follow this instruction:
+            3.1 List all of kanji(漢字) in the sentence. You must list kanji as single kanji, and not compound kanji. For each kanji follow this instruction:
             - Kanji has it own meaning. So, give me each kanji meaning.
             - Kanji has many way to read and can be consist with other kanji. So, give me kun-yomi(訓読み) and on-yomi(音読み) for each kanji.
-            - Give me five examples of word for each kanji consisted, ordered by word frequency, give me a furigana and meaning of each word.
+            - Give me five examples of words for each kanji, ordered by word frequency, give me a furigana and meaning of each word.
             4) Write a short example conversation use the sentence given. Conversation is between Aさん and Bさん.
             -Give a furigana and translate the written conversation to English.
 
@@ -47,9 +47,6 @@ user_input = st.text_area("Enter Japanese text:", "日本語")
 submit_button = st.button("Submit")
 
 if submit_button:
-    with st.spinner("Japanizer will take a while to process your input. :confounded: Please wait..."):
-        time.sleep(120)
-
     messages_so_far = [
         {"role": "system", "content": prompt},
         {'role': 'user', 'content': user_input},
@@ -63,7 +60,7 @@ if submit_button:
     ad = json.loads(answer_dictionary)
     print (ad)
 
-    st.success("Your results are ready! ٩(＾◡＾)۶")
+    st.success("Your results are ready!  ٩(＾◡＾)۶")
 
     translations = ad["Translation"]["Translations"]
     print(translations)
